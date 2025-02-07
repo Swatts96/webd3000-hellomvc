@@ -10,12 +10,15 @@ namespace HelloMVC.Models
         public int DiscussionId { get; set; }
 
         // Properties
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string ImageFilename { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+        public string ImageFilename { get; set; } = string.Empty;
         public DateTime CreateDate { get; set; }
+        public bool isPublic { get; set; } = false;
 
         // One-to-many relationship with Comment
-        public ICollection<Comment> Comments { get; set; }
+        public required ICollection<Comment> Comment { get; set; }
+
+        public List<Discussion>? Comments { get; set; } //nullable
     }
 }
