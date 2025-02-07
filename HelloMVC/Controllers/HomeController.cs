@@ -24,16 +24,18 @@ namespace HelloMVC.Controllers
                 Title = "Sidney Crosby Injured before four nations tournament",
                 Content = "He was injured and now he can't play",
                 ImageFilename = "crosby.jpg",
-                IsPublic = true // Ensure this property exists in your Discussion model
+                IsPublic = true, // Ensure this property exists in your Discussion model
+                Comments = new List<Comment>() // Each discussion has comments
             };
 
             Discussion discussion2 = new Discussion()
             {
                 DiscussionId = 2,
-                Title = "Sidney Crosby Injured before four nations tournament",
+                Title = "Connor Mcdavid traded to Minnesota??",
                 Content = "He was injured and now he can't play",
                 ImageFilename = "crosby.jpg",
-                IsPublic = true
+                IsPublic = true,
+                Comments = new List<Comment>() // Each discussion has comments
             };
 
             Discussion discussion3 = new Discussion()
@@ -42,7 +44,8 @@ namespace HelloMVC.Controllers
                 Title = "Malkin playing",
                 Content = "He was injured and now he can't play",
                 ImageFilename = "malkin.jpg",
-                IsPublic = true
+                IsPublic = true,
+                Comments = new List<Comment>() // Each discussion has comments
             };
 
             // Add to the list
@@ -55,15 +58,20 @@ namespace HelloMVC.Controllers
         }
 
 
+
+        // Display discussion by id 
         public IActionResult DisplayDiscussion(int id)
         {
+
+            //To do : Entity framework 
             Discussion discussion = new Discussion()
             {
                 DiscussionId = id,
                 Title = "Ovechkin",
                 Content = "good player",
                 ImageFilename = "ovechkin.jpg",
-                IsPublic = true
+                IsPublic = true,
+                Comments = new List<Comment>() // Each discussion has comments
             };
             return View(discussion);
         }

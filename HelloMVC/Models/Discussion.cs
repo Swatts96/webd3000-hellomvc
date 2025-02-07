@@ -17,6 +17,6 @@ namespace HelloMVC.Models
         public bool IsPublic { get; set; } = false;
 
         // One-to-many relationship with Comment
-        public required ICollection<Comment> Comments { get; set; }
+        public required ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
