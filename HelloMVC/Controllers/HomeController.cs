@@ -54,6 +54,20 @@ namespace HelloMVC.Controllers
             return View(discussions);
         }
 
+
+        public IActionResult DisplayDiscussion(int id)
+        {
+            Discussion discussion = new Discussion()
+            {
+                DiscussionId = id,
+                Title = "Ovechkin",
+                Content = "good player",
+                ImageFilename = "ovechkin.jpg",
+                IsPublic = true
+            };
+            return View(discussion);
+        }
+
         public IActionResult Privacy()
         {
             return View();

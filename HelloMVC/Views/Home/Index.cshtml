@@ -1,8 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<HelloMVC.Models.Discussion>
+
+@{
+    ViewData["Title"] = "NHL Discussion Forum";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Discussion Forum</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var discussion in Model)
+        {
+            <tr>
+                <td>@discussion.Title</td>
+                <td>@discussion.Content</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(discussion.ImageFilename))
+                    {
+                        <img src="~/images/@discussion.ImageFilename" alt="Discussion Image" width="100" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
