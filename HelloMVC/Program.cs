@@ -1,4 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using HelloMVC.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<HelloMVCContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HelloMVCContext") ?? throw new InvalidOperationException("Connection string 'HelloMVCContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

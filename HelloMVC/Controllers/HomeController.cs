@@ -11,7 +11,7 @@ namespace HelloMVC.Controllers
             // Constructor logic (if needed)
         }
 
-        // Display all discussions
+        // Home page ---- Display all discussions
         public IActionResult Index()
         {
             // Create a list of discussions
@@ -76,6 +76,8 @@ namespace HelloMVC.Controllers
             return View(discussion);
         }
 
+
+        // Privacy page 
         public IActionResult Privacy()
         {
             return View();
