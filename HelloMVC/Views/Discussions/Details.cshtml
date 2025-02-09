@@ -4,22 +4,22 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Discussion Details</h1>
 
 <div>
     <h4>Discussion</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Content)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Content)
         </dd>
         <dt class="col-sm-2">
@@ -28,27 +28,60 @@
         <dd class="col-sm-10">
             @if (!string.IsNullOrEmpty(Model.ImageFilename))
             {
-                <img src="~/images/@Model.ImageFilename" alt="Discussion Image" style="max-width:300px;" />
+                <img src="~/images/@Model.ImageFilename" alt="Discussion image" style="max-width:300px;" />
             }
             else
             {
                 <span>No image uploaded.</span>
             }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreateDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreateDate)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IsPublic)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IsPublic)
         </dd>
     </dl>
 </div>
+
+<hr />
+
+<!-- Display Comments -->
+<h2>Comments</h2>
+@if (Model.Comments != null && Model.Comments.Any())
+{
+    <ul class="list-group">
+        @foreach (var comment in Model.Comments.OrderByDescending(c => c.CreateDate))
+        {
+            <li class="list-group-item">
+                <p>@comment.Content</p>
+                <small>Posted: @comment.CreateDate.ToString("g")</small>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No comments yet. Be the first to comment!</p>
+}
+
+<!-- Form to add a new Comment -->
+<h3>Add a Comment</h3>
+<form asp-controller="Comments" asp-action="Create" method="post">
+    <!-- Pass the DiscussionId as a hidden field -->
+    <input type="hidden" name="DiscussionId" value="@Model.DiscussionId" />
+    <div class="form-group">
+        <textarea name="Content" class="form-control" rows="3" placeholder="Enter your comment here"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+</form>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.DiscussionId">Edit</a> |
     <a asp-action="Index">Back to List</a>

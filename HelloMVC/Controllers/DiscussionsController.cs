@@ -36,6 +36,7 @@ namespace HelloMVC.Controllers
             }
 
             var discussion = await _context.Discussion
+                .Include(d => d.Comments) // Include related comments
                 .FirstOrDefaultAsync(m => m.DiscussionId == id);
             if (discussion == null)
             {
@@ -44,6 +45,7 @@ namespace HelloMVC.Controllers
 
             return View(discussion);
         }
+
 
         // GET: Discussions/Create
         public IActionResult Create()
