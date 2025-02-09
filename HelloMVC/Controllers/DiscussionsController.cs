@@ -51,21 +51,53 @@ namespace HelloMVC.Controllers
             return View();
         }
 
+
         // POST: Discussions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DiscussionId,Title,Content,ImageFilename,CreateDate,IsPublic")] Discussion discussion)
+        // Notice we removed ImageFilename from the Bind list since it will be set by our code.
+        public async Task<IActionResult> Create([Bind("DiscussionId,Title,Content,IsPublic")] Discussion discussion, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
+                // If an image was uploaded, process it.
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    // Generate a unique file name using a GUID and keep the original extension.
+                    string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+
+                    // Build the path to the "images" folder in wwwroot.
+                    string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "images");
+
+                    // Ensure the folder exists. If not, create it.
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Combine the path and file name.
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Save the file to disk.
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+
+                    // Store the unique file name in the model.
+                    discussion.ImageFilename = uniqueFileName;
+                }
+
+                // Set the creation date.
+                discussion.CreateDate = DateTime.Now;
+
                 _context.Add(discussion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(discussion);
         }
+
 
         // GET: Discussions/Edit/5
         public async Task<IActionResult> Edit(int? id)
