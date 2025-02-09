@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HelloMVC.Data;
 using HelloMVC.Models;
@@ -13,10 +13,12 @@ namespace HelloMVC.Controllers
     public class DiscussionsController : Controller
     {
         private readonly HelloMVCContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;  // For file system paths
 
-        public DiscussionsController(HelloMVCContext context)
+        public DiscussionsController(HelloMVCContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: Discussions
