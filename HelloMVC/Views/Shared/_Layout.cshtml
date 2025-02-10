@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <!-- Brand: explicitly set asp-action to "Index" -->
+                <!-- Brand -->
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     Top Shelf - NHL Forum
                 </a>
@@ -21,9 +21,7 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <!-- Navbar content -->
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <!-- Left-aligned links -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Discussions" asp-action="Create">
@@ -31,12 +29,10 @@
                             </a>
                         </li>
                     </ul>
-                    <!-- Centered search form -->
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search discussions..." aria-label="Search">
                         <button class="btn btn-outline-secondary" type="submit">Search</button>
                     </form>
-                    <!-- Right-aligned additional links with icons -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="#">
@@ -75,10 +71,20 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <!-- Nav ends -->
+    <div class="container my-4">
+        <div class="row">
+            <!-- Sidebar Column (adjust column width as needed) -->
+            <div class="col-md-3">
+                @await Html.PartialAsync("_Sidebar")
+            </div>
+            <!-- Main Content Column -->
+            <div class="col-md-9">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
     </div>
     <footer class="border-top footer text-muted">
         <div class="container">

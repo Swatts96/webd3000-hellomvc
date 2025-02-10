@@ -29,3 +29,94 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+:root {
+    /* Color Palette */
+    --primary-color: #7e2a00; /* Text and buttons */
+    --secondary-color: #6c757d; /* Gray for secondary text */
+    --accent-color: #f39c12; /* Accent (for hover, links, etc.) */
+    --background-color:#a3a#3a3; /* Light background */
+    --text-color: #333333; /* Standard text color */
+    /* Sizing & Border */
+    --border-radius: 0.5rem; /* Rounded corners for buttons/cards */
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Standard box shadow */
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-link {
+    color: var(--primary-color);
+    transition: color 0.2s;
+}
+
+    .btn-link:hover {
+        color: var(--accent-color);
+    }
+
+.navbar {
+    background-color: #333333;
+    border-bottom: 1px solid var(--accent-color);
+
+}
+.nav-link {
+    color: var(--primary-color);
+    transition: color 0.2s;
+}
+
+/*.navbar-brand,
+.nav-link {
+    color: #ffffff !important;
+}
+
+    .nav-link:hover {
+        color: var(--accent-color) !important;
+    }*/
+
+/* Cards (used for sidebar and content boxes) */
+.card {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* Forms: Add rounded corners to form controls */
+.form-control,
+.form-check-input {
+    border-radius: var(--border-radius);
+}
+
+/* Buttons inside forms or other controls */
+.btn {
+    border-radius: var(--border-radius);
+}
+
+/* Update links on hover for a subtle effect */
+a {
+    color: var(--primary-color);
+    transition: color 0.2s;
+}
+
+    a:hover {
+        color: var(--accent-color);
+    }
+
+.sidebar {
+    background-color: var(--background-color);
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+    .sidebar .card {
+        margin-bottom: 1rem;
+    }
+
+
+

@@ -1,32 +1,25 @@
 ﻿@model HelloMVC.Models.Comment
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add Comment";
 }
 
-<h1>Add </h1>
-
-<h4>Comment</h4>
+<h1>Add Comment</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <!-- Hidden field for DiscussionId, provided via ViewBag -->
             <input type="hidden" name="DiscussionId" value="@ViewBag.DiscussionId" />
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <textarea asp-for="Content" class="form-control" rows="3" placeholder="Enter your comment here"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CreateDate" class="control-label"></label>
-                <input asp-for="CreateDate" class="form-control" />
-                <span asp-validation-for="CreateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DiscussionId" class="control-label"></label>
-                <select asp-for="DiscussionId" class ="form-control" asp-items="ViewBag.DiscussionId"></select>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Submit Comment" class="btn btn-primary" />
             </div>
@@ -35,9 +28,11 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="GetDiscussion" asp-route-id="@ViewBag.DiscussionId">Back to Discussion</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

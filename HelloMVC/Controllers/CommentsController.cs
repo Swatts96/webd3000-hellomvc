@@ -69,11 +69,19 @@ namespace HelloMVC.Controllers
                 // Redirect back to the GetDiscussion page in HomeController
                 return RedirectToAction("GetDiscussion", "Home", new { id = comment.DiscussionId });
             }
-            // If model state is invalid, you might want to re-display the form.
-            // For now, redirecting back to GetDiscussion.
+            // If model state is invalid, redirect back to GetDiscussion.
             return RedirectToAction("GetDiscussion", "Home", new { id = comment.DiscussionId });
         }
 
+
+
+        [HttpGet]
+        public IActionResult Create(int discussionId)
+        {
+            // Pass the discussionId to the view using ViewBag
+            ViewBag.DiscussionId = discussionId;
+            return View();
+        }
 
 
         // GET: Comments/Edit/5
