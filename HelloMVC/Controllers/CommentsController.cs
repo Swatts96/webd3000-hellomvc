@@ -52,6 +52,14 @@ namespace HelloMVC.Controllers
             return View();
         }
 
+        // GET: Comments/Create?discussionId=5
+        public IActionResult Create(int discussionId)
+        {
+            // Pass the discussionId to the view (e.g., via ViewBag or a view model)
+            ViewBag.DiscussionId = discussionId;
+            return View();
+        }
+
         // POST: Comments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

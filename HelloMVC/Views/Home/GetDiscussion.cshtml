@@ -1,0 +1,55 @@
+﻿@model HelloMVC.Models.Discussion
+
+@{
+    ViewData["Title"] = "Discussion Details";
+}
+
+<div class="container my-4">
+    <h1>@Model.Title</h1>
+    
+    <div class="mb-3">
+        @if (!string.IsNullOrEmpty(Model.ImageFilename))
+        {
+            <img src="~/images/@Model.ImageFilename" alt="Discussion image" style="max-width:600px;" />
+        }
+        else
+        {
+            <span>No image uploaded.</span>
+        }
+    </div>
+    
+    <div>
+        <p>@Model.Content</p>
+        <p><strong>Created:</strong> @Model.CreateDate.ToString("g")</p>
+    </div>
+    
+    <hr />
+    
+    <!-- Link to add a new comment -->
+    <div class="mb-3">
+        <a class="btn btn-primary" 
+           asp-controller="Comments" 
+           asp-action="Create" 
+           asp-route-discussionId="@Model.DiscussionId">
+            Add New Comment
+        </a>
+    </div>
+    
+    <h3>Comments</h3>
+    @if (Model.Comments != null && Model.Comments.Any())
+    {
+        <ul class="list-group">
+            @foreach (var comment in Model.Comments)
+            {
+                <li class="list-group-item">
+                    <p>@comment.Content</p>
+                    <small>Posted: @comment.CreateDate.ToString("g")</small>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No comments yet.</p>
+    }
+</div>
