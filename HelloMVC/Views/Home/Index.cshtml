@@ -1,32 +1,54 @@
-﻿@model List<HelloMVC.Models.Discussion>
+﻿@model IEnumerable<HelloMVC.Models.Discussion>
 
 @{
-    ViewData["Title"] = "NHL Discussion Forum";
+    ViewData["Title"] = "Discussions";
 }
 
-<h2>Discussion Forum</h2>
+<div class="container my-4">
+    <!-- Create Discussion Button -->
+    <div class="mb-3">
+        <a class="btn btn-primary" asp-controller="Discussions" asp-action="Create">
+            Create New Discussion
+        </a>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Image</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var discussion in Model)
-        {
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@discussion.Title</td>
-                <td>@discussion.Content</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(discussion.ImageFilename))
-                    {
-                        <img src="~/images/@discussion.ImageFilename" alt="Discussion Image" width="100" />
-                    }
-                </td>
+                <th>Thumbnail</th>
+                <th>Title</th>
+                <th>Comments</th>
+                <th>Created</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var discussion in Model)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(discussion.ImageFilename))
+                        {
+                            <img src="~/images/@discussion.ImageFilename" alt="Discussion image" style="max-width:100px;" />
+                        }
+                        else
+                        {
+                            <span>No image</span>
+                        }
+                    </td>
+                    <td>
+                        <!-- Clicking the title goes to GetDiscussion in HomeController -->
+                        <a asp-controller="Home" asp-action="GetDiscussion" asp-route-id="@discussion.DiscussionId">
+                            @discussion.Title
+                        </a>
+                    </td>
+                    <td>
+                        @(discussion.Comments?.Count() ?? 0)
+                    </td>
+                    <td>
+                        @discussion.CreateDate.ToString("g")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

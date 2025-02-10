@@ -35,12 +35,6 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Content)
-                </td>
-                <td>
                     @if (!string.IsNullOrEmpty(item.ImageFilename))
                     {
                         <img src="~/images/@item.ImageFilename" alt="Discussion image" style="max-width:150px;" />
@@ -49,6 +43,12 @@
                     {
                         <span>No image</span>
                     }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CreateDate)
