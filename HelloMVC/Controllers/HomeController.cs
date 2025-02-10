@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using HelloMVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HelloMVC.Controllers
 {
@@ -9,6 +10,7 @@ namespace HelloMVC.Controllers
         public HomeController()
         {
             // Constructor logic (if needed)
+
         }
 
         // Home page ---- Display all discussions

@@ -57,17 +57,21 @@ namespace HelloMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommentId,Content,CreateDate,DiscussionId")] Comment comment)
+        public async Task<IActionResult> Create([Bind("Content,DiscussionId")] Comment comment)
         {
             if (ModelState.IsValid)
             {
+                // Set the creation date server-side
+                comment.CreateDate = DateTime.Now;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Redirect back to the discussion details page
+                return RedirectToAction("Details", "Discussions", new { id = comment.DiscussionId });
             }
-            ViewData["DiscussionId"] = new SelectList(_context.Discussion, "DiscussionId", "DiscussionId", comment.DiscussionId);
-            return View(comment);
+            // If the model state is invalid, redirect back (or handle as needed)
+            return RedirectToAction("Details", "Discussions", new { id = comment.DiscussionId });
         }
+
 
         // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)
