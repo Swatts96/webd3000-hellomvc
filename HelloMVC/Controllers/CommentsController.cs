@@ -45,20 +45,13 @@ namespace HelloMVC.Controllers
             return View(comment);
         }
 
-        // GET: Comments/Create
-        public IActionResult Create()
-        {
-            ViewData["DiscussionId"] = new SelectList(_context.Discussion, "DiscussionId", "DiscussionId");
-            return View();
-        }
+        //// GET: Comments/Create
+        //public IActionResult Create()
+        //{
+        //    ViewData["DiscussionId"] = new SelectList(_context.Discussion, "DiscussionId", "DiscussionId");
+        //    return View();
+        //}
 
-        // GET: Comments/Create?discussionId=5
-        public IActionResult Create(int discussionId)
-        {
-            // Pass the discussionId to the view (e.g., via ViewBag or a view model)
-            ViewBag.DiscussionId = discussionId;
-            return View();
-        }
 
         // POST: Comments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -73,12 +66,14 @@ namespace HelloMVC.Controllers
                 comment.CreateDate = DateTime.Now;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                // Redirect back to the discussion details page
-                return RedirectToAction("Details", "Discussions", new { id = comment.DiscussionId });
+                // Redirect back to the GetDiscussion page in HomeController
+                return RedirectToAction("GetDiscussion", "Home", new { id = comment.DiscussionId });
             }
-            // If the model state is invalid, redirect back (or handle as needed)
-            return RedirectToAction("Details", "Discussions", new { id = comment.DiscussionId });
+            // If model state is invalid, you might want to re-display the form.
+            // For now, redirecting back to GetDiscussion.
+            return RedirectToAction("GetDiscussion", "Home", new { id = comment.DiscussionId });
         }
+
 
 
         // GET: Comments/Edit/5
