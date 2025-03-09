@@ -1,0 +1,74 @@
+﻿@model HelloMVC.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>@Model.User.Name's Profile</h1>
+
+<div class="row">
+    <div class="col-md-3">
+        <!-- Profile Picture Thumbnail -->
+        @if (!string.IsNullOrEmpty(Model.User.ImageFilename))
+        {
+            <img src="~/images/@Model.User.ImageFilename" alt="Profile Picture" style="width:150px; height:150px; border-radius:50%;" />
+        }
+        else
+        {
+            <img src="~/images/placeholder-profile.png" alt="Placeholder" style="width:150px; height:150px; border-radius:50%;" />
+        }
+    </div>
+    <div class="col-md-9">
+        <p><strong>Name:</strong> @Model.User.Name</p>
+        <p><strong>Location:</strong> @Model.User.Location</p>
+    </div>
+</div>
+
+<hr />
+
+<h2>@Model.User.Name's Discussions</h2>
+@if (Model.Discussions.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Thumbnail</th>
+                <th>Title</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var discussion in Model.Discussions)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(discussion.ImageFilename))
+                        {
+                            <img src="~/images/@discussion.ImageFilename" alt="Discussion image" style="max-width:100px;" />
+                        }
+                        else
+                        {
+                            <span>No image</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="Home" asp-action="GetDiscussion" asp-route-id="@discussion.DiscussionId">
+                            @discussion.Title
+                        </a>
+                    </td>
+                    <td>
+                        @discussion.CreateDate.ToString("g")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>This user hasn't started any discussions yet.</p>
+}
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to Discussions</a>
+</div>

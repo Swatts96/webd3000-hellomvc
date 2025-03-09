@@ -21,9 +21,11 @@ namespace HelloMVC.Controllers
         {
             // Load discussions, including comments, ordered descending by CreateDate
             var discussions = await _context.Discussion
-                .Include(d => d.Comments)
+                .Include(d => d.AppUser)
                 .OrderByDescending(d => d.CreateDate)
                 .ToListAsync();
+
+
             return View(discussions);
         }
 
@@ -32,8 +34,12 @@ namespace HelloMVC.Controllers
         {
             // Load a single discussion (with its comments)
             var discussion = await _context.Discussion
-                .Include(d => d.Comments)
-                .FirstOrDefaultAsync(d => d.DiscussionId == id);
+            .Include(d => d.AppUser)            // Load the discussion owner
+            .Include(d => d.Comments)
+                .ThenInclude(c => c.AppUser)     // Load the comment owners
+            .FirstOrDefaultAsync(d => d.DiscussionId == id);
+
+
             if (discussion == null)
             {
                 return NotFound();
