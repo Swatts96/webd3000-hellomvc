@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using HelloMVC.Models;
 
 namespace HelloMVC.Models
@@ -17,5 +18,12 @@ namespace HelloMVC.Models
 
         // Navigation property for the many-to-one relationship with Discussion
         public required Discussion? Discussion { get; set; }
+
+        // New: Foreign key to ApplicationUser
+        public string? ApplUserId { get; set; }
+
+        // New: Nullable navigation property
+        [ForeignKey("AppUserId")]
+        public virtual AppUser? AppUser { get; set; }
     }
 }

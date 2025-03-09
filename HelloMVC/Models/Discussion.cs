@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using HelloMVC.Models;
 
 namespace HelloMVC.Models
@@ -18,5 +19,12 @@ namespace HelloMVC.Models
 
         // One-to-many relationship with Comment
         public required ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+        // Foreign key to AppUser
+        public string? AppUserId { get; set; }
+
+        // Nullable navigation property
+        [ForeignKey("AppUserId")]
+        public virtual AppUser? AppUser { get; set; }
     }
 }
