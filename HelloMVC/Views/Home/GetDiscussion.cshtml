@@ -4,80 +4,110 @@
     ViewData["Title"] = "Discussion Details";
 }
 
-<div class="container my-4">
-    <h1>@Model.Title</h1>
-    
-    <div class="mb-3">
-        @if (!string.IsNullOrEmpty(Model.ImageFilename))
-        {
-            <img src="~/images/@Model.ImageFilename" alt="Discussion image" style="max-width:600px;" />
-        }
-        else
-        {
-            <span>No image uploaded.</span>
-        }
-    </div>
-    
-    <div>
-        <p>@Model.Content</p>
-        <p><strong>Created:</strong> @Model.CreateDate.ToString("g")</p>
-    </div>
-    
-    <hr />
+<h1>@Model.Title</h1>
 
-    <!-- Link to add a new comment (placed above the comments list) -->
-    <div class="my-3">
-        <a class="btn btn-primary"
-           asp-controller="Comments"
-           asp-action="Create"
-           asp-route-discussionId="@Model.DiscussionId">
-            Add New Comment
-        </a>
-    </div>
-
-    <!-- Display Comments -->
-    <h2>Comments</h2>
-    @if (Model.Comments != null && Model.Comments.Any())
+<div>
+    @if (!string.IsNullOrEmpty(Model.ImageFilename))
     {
-        <ul class="list-group">
-            @foreach (var comment in Model.Comments.OrderByDescending(c => c.CreateDate))
-            {
-                <li class="list-group-item">
-                    <p>@comment.Content</p>
-                    <small>Posted: @comment.CreateDate.ToString("g")</small>
-                    <!-- Inline Edit and Delete links for the comment -->
-                    <span>
-                        <a class="btn btn-link p-0"
-                           asp-controller="Comments"
-                           asp-action="Edit"
-                           asp-route-id="@comment.CommentId">
-                            <!-- Pencil SVG Icon for Edit -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-pencil" viewBox="0 0 16 16">
-                                <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2L2 11.207V13h1.793L14 3.793 11.207 2z" />
-                            </svg>
-                            Edit
-                        </a>
-                        <span> | </span>
-                        <a class="btn btn-link p-0"
-                           asp-controller="Comments"
-                           asp-action="Delete"
-                           asp-route-id="@comment.CommentId">
-                            <!-- Red X SVG Icon for Delete -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                                 class="bi bi-x-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm3.354-9.646a.5.5 0 0 1 0 .708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 1 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708L8 7.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                            </svg>
-                            Delete
-                        </a>
-                    </span>
-                </li>
-            }
-        </ul>
+        <img src="~/images/@Model.ImageFilename" alt="Discussion image" style="max-width:600px;" />
     }
     else
     {
-        <p>No comments yet. Be the first to comment!</p>
+        <span>No image uploaded.</span>
     }
+</div>
 
+<hr />
+
+<!-- Owner information -->
+<div class="mb-3">
+    <strong>Posted by: </strong>
+    @if (!string.IsNullOrEmpty(Model.AppUserId))
+    {
+        <a asp-controller="Home" asp-action="Profile" asp-route-id="@Model.AppUserId">
+            @if (!string.IsNullOrEmpty(Model.AppUser?.ImageFilename))
+            {
+                <img src="~/images/@Model.AppUser.ImageFilename" alt="Profile picture" style="width:40px; height:40px; border-radius:50%;" />
+            }
+            else
+            {
+                <img src="~/images/placeholder-profile.png" alt="Placeholder" style="width:40px; height:40px; border-radius:50%;" />
+            }
+            @Model.AppUser?.Name
+        </a>
+    }
+    else
+    {
+        <span>Anonymous</span>
+    }
+</div>
+
+<div>
+    <p>@Model.Content</p>
+    <p><strong>Created:</strong> @Model.CreateDate.ToString("g")</p>
+</div>
+
+<!-- Inline Edit and Delete for the discussion itself -->
+<p>
+    <a class="btn btn-link p-0" asp-controller="Discussions" asp-action="Edit" asp-route-id="@Model.DiscussionId">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             class="bi bi-pencil" viewBox="0 0 16 16">
+            <path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2L2 11.207V13h1.793L14 3.793 11.207 2z" />
+        </svg>
+        Edit
+    </a>
+    <span> | </span>
+    <a class="btn btn-link p-0" asp-controller="Discussions" asp-action="Delete" asp-route-id="@Model.DiscussionId">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
+             class="bi bi-x-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm3.354-9.646a.5.5 0 0 1 0 .708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 1 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708L8 7.293l2.646-2.647a.5.5 0 0 1 .708 0z" />
+        </svg>
+        Delete
+    </a>
+</p>
+
+<hr />
+
+<!-- Comments Section -->
+<h2>Comments</h2>
+@if (Model.Comments != null && Model.Comments.Any())
+{
+    <ul class="list-group">
+        @foreach (var comment in Model.Comments.OrderByDescending(c => c.CreateDate))
+        {
+            <li class="list-group-item">
+                <p>@comment.Content</p>
+                <small>
+                    Posted: @comment.CreateDate.ToString("g") by
+                    @if (!string.IsNullOrEmpty(comment.AppUserId))
+                    {
+                        <a asp-controller="Home" asp-action="Profile" asp-route-id="@comment.AppUserId">
+                            @comment.AppUser?.Name ?? "Unknown"
+                        </a>
+                    }
+                    else
+                    {
+                        <span>Anonymous</span>
+                    }
+                </small>
+                <!-- Inline Edit/Delete for comment can be added here if desired -->
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No comments yet. Be the first to comment!</p>
+}
+<hr />
+
+<!-- Link to add a new comment -->
+<div>
+    <a class="btn btn-primary" asp-controller="Comments" asp-action="Create" asp-route-discussionId="@Model.DiscussionId">
+        Add New Comment
+    </a>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
