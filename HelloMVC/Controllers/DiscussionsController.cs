@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HelloMVC.Data;
 using HelloMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HelloMVC.Controllers
 {
+    [Authorize]
     public class DiscussionsController : Controller
     {
         private readonly HelloMVCContext _context;
