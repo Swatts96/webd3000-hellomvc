@@ -102,6 +102,12 @@ namespace HelloMVC.Controllers
             {
                 return NotFound();
             }
+
+            // Only allow editing if the current user owns the comment
+            if (comment.AppUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return Forbid();
+            }
             ViewData["DiscussionId"] = new SelectList(_context.Discussion, "DiscussionId", "DiscussionId", comment.DiscussionId);
             return View(comment);
         }
@@ -156,6 +162,12 @@ namespace HelloMVC.Controllers
             if (comment == null)
             {
                 return NotFound();
+            }
+
+            // Only allow deletion if the current user owns the comment
+            if (comment.AppUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return Forbid();
             }
 
             return View(comment);

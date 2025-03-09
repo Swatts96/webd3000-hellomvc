@@ -116,6 +116,12 @@ namespace HelloMVC.Controllers
             {
                 return NotFound();
             }
+
+            // Check if the current user is the owner
+            if (discussion.AppUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return Forbid();
+            }
             return View(discussion);
         }
 
@@ -167,6 +173,12 @@ namespace HelloMVC.Controllers
             if (discussion == null)
             {
                 return NotFound();
+            }
+
+            // Only allow deletion if current user owns the discussion
+            if (discussion.AppUserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return Forbid();
             }
 
             return View(discussion);
