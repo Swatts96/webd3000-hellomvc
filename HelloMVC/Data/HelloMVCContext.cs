@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using HelloMVC.Models;
 
 namespace HelloMVC.Data
 {
-    public class HelloMVCContext : DbContext
+    public class HelloMVCContext : IdentityDbContext<AppUser>
     {
         public HelloMVCContext (DbContextOptions<HelloMVCContext> options)
             : base(options)
