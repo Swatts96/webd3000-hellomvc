@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using HelloMVC.Data;
 using HelloMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace HelloMVC.Controllers
 {
@@ -89,6 +90,10 @@ namespace HelloMVC.Controllers
 
                 // Set the creation date.
                 discussion.CreateDate = DateTime.Now;
+
+                // Set logged in user's ID:
+                discussion.AppUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
 
                 _context.Add(discussion);
                 await _context.SaveChangesAsync();

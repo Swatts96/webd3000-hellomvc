@@ -20,7 +20,7 @@ namespace HelloMVC.Models
         public required Discussion? Discussion { get; set; }
 
         // New: Foreign key to ApplicationUser
-        public string? ApplUserId { get; set; }
+        public string? AppUserId { get; set; }
 
         // New: Nullable navigation property
         [ForeignKey("AppUserId")]

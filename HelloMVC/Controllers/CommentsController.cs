@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using HelloMVC.Data;
 using HelloMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 
 namespace HelloMVC.Controllers
@@ -63,6 +64,11 @@ namespace HelloMVC.Controllers
             {
                 // Set the creation date server-side
                 comment.CreateDate = DateTime.Now;
+
+                // Set the user ID
+                
+                comment.AppUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 // Redirect back to the GetDiscussion page in HomeController
