@@ -32,7 +32,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.MapRazorPages();
 app.UseAuthorization();
 
 app.MapStaticAssets();
