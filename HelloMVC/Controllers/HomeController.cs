@@ -43,48 +43,40 @@ namespace HelloMVC.Controllers
             return View(discussion);
         }
 
+        // GET: Home/Profile/{id}
+        public async Task<IActionResult> Profile(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            // Get the user from the Identity database (via _context.Users)
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Get all discussions created by the user
+            var discussions = await _context.Discussion
+                .Where(d => d.AppUserId == id)
+                .OrderByDescending(d => d.CreateDate)
+                .ToListAsync();
+
+            var model = new ProfileViewModel
+            {
+                User = user,
+                Discussions = discussions
+            };
+
+            return View(model);
+        }
+
+
         public IActionResult Privacy()
         {
             return View();
         }
     }
 }
-
-//// Create 3 discussion objects 
-//Discussion discussion1 = new Discussion()
-//            {
-//                DiscussionId = 1,
-//                Title = "Sidney Crosby Injured before four nations tournament",
-//                Content = "He was injured and now he can't play",
-//                ImageFilename = "crosby.jpg",
-//                IsPublic = true, // Ensure this property exists in your Discussion model
-//                Comments = new List<Comment>() // Each discussion has comments
-//            };
-
-//            Discussion discussion2 = new Discussion()
-//            {
-//                DiscussionId = 2,
-//                Title = "Connor Mcdavid traded to Minnesota??",
-//                Content = "He was injured and now he can't play",
-//                ImageFilename = "crosby.jpg",
-//                IsPublic = true,
-//                Comments = new List<Comment>() // Each discussion has comments
-//            };
-
-//            Discussion discussion3 = new Discussion()
-//            {
-//                DiscussionId = 3, // Corrected ID
-//                Title = "Malkin playing",
-//                Content = "He was injured and now he can't play",
-//                ImageFilename = "malkin.jpg",
-//                IsPublic = true,
-//                Comments = new List<Comment>() // Each discussion has comments
-//            };
-
-//            // Add to the list
-//            discussions.Add(discussion1);
-//            discussions.Add(discussion2);
-//            discussions.Add(discussion3);
-
-//            // Pass the list to the view
-//            return View(discussions)
