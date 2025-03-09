@@ -1,9 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using HelloMVC.Data;
+using HelloMVC.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<HelloMVCContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HelloMVCContext") ?? throw new InvalidOperationException("Connection string 'HelloMVCContext' not found.")));
+
+
+// Configure Identity
+builder.Services.AddDefaultIdentity<AppUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false; // Set to true if you require email confirmation
+})
+.AddEntityFrameworkStores<HelloMVCContext>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
