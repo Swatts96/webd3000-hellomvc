@@ -45,5 +45,5 @@ Top Shelf - NHL Forum is an ASP.NET Core MVC forum application developed as part
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/TopShelfNHLForum.git
+   git clone https://github.com/Swatts96/TopShelfNHLForum.git
    cd TopShelfNHLForum
