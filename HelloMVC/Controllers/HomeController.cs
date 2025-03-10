@@ -4,6 +4,7 @@ using HelloMVC.Data;
 using HelloMVC.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace HelloMVC.Controllers
 {
@@ -74,11 +75,54 @@ namespace HelloMVC.Controllers
             {
                 User = user,
                 Discussions = discussions
+
             };
 
             return View(model);
         }
 
+
+        // GET: Home/MyThreads
+        public async Task<IActionResult> MyThreads()
+        {
+            // Retrieve the logged-in user's ID.
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return NotFound("User not logged in or user ID not found.");
+            }
+
+            // Load the user from the database.
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound("User not found in the database.");
+            }
+
+            // Fetch discussions created by this user.
+            var discussions = await _context.Discussion
+                .Where(d => d.AppUserId == userId)
+                .OrderByDescending(d => d.CreateDate)
+                .ToListAsync();
+
+            // Fetch comments created by this user (including the associated discussion for linking).
+            var comments = await _context.Comment
+                .Where(c => c.AppUserId == userId)
+                .Include(c => c.Discussion)
+                .OrderByDescending(c => c.CreateDate)
+                .ToListAsync();
+
+            // Build the view model.
+            var model = new MyThreadsViewModel
+            {
+                User = user,
+                Discussions = discussions,
+                Comments = comments
+            };
+
+            return View(model);
+        }
+    
 
         public IActionResult Privacy()
         {

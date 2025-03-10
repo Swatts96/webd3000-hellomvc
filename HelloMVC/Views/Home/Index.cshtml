@@ -48,7 +48,7 @@
                         {
                             <!-- Owner's name clickable to Profile page -->
                             <a asp-controller="Home" asp-action="Profile" asp-route-id="@discussion.AppUserId">
-                                @discussion.AppUser?.Name ?? "Unknown"
+                                @discussion.AppUser?.Name
                             </a>
                         }
                         else

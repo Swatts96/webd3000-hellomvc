@@ -1,0 +1,115 @@
+﻿@model HelloMVC.Models.MyThreadsViewModel
+
+@{
+    ViewData["Title"] = "My Threads";
+}
+
+<h1>My Threads</h1>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <!-- Show user's profile pic if available -->
+        @if (!string.IsNullOrEmpty(Model.User.ImageFilename))
+        {
+            <img src="~/images/@Model.User.ImageFilename" alt="Profile Picture" style="width:100px; height:100px; border-radius:50%;" />
+        }
+        else
+        {
+            <img src="~/images/placeholder-profile.png" alt="Placeholder" style="width:100px; height:100px; border-radius:50%;" />
+        }
+    </div>
+    <div class="col-md-8">
+        <p><strong>Name:</strong> @Model.User.Name</p>
+        <p><strong>Location:</strong> @Model.User.Location</p>
+    </div>
+</div>
+
+<hr />
+
+<!-- Discussions by this user -->
+<h2>My Discussions</h2>
+@if (Model.Discussions.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Thumbnail</th>
+                <th>Title</th>
+                <th>Created</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var discussion in Model.Discussions)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(discussion.ImageFilename))
+                        {
+                            <img src="~/images/@discussion.ImageFilename" alt="Discussion image" style="max-width:100px;" />
+                        }
+                        else
+                        {
+                            <span>No image</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="Home" asp-action="GetDiscussion" asp-route-id="@discussion.DiscussionId">
+                            @discussion.Title
+                        </a>
+                    </td>
+                    <td>@discussion.CreateDate.ToString("g")</td>
+                    <td>@discussion.Comments?.Count() ?? 0</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>You haven't created any discussions yet.</p>
+}
+
+<hr />
+
+<!-- Comments by this user -->
+<h2>My Comments</h2>
+@if (Model.Comments.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Discussion</th>
+                <th>Comment</th>
+                <th>Posted</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comment in Model.Comments)
+            {
+                <tr>
+                    <td>
+                        <!-- Link to the associated discussion -->
+                        <a asp-controller="Home" asp-action="GetDiscussion" asp-route-id="@comment.DiscussionId">
+                            @comment.Discussion?.Title
+                        </a>
+                    </td>
+                    <td>
+                        @comment.Content
+                    </td>
+                    <td>
+                        @comment.CreateDate.ToString("g")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>You haven't commented on any discussions yet.</p>
+}
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Back to Home</a>
+</div>

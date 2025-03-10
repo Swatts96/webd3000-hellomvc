@@ -82,7 +82,7 @@
                     @if (!string.IsNullOrEmpty(comment.AppUserId))
                     {
                         <a asp-controller="Home" asp-action="Profile" asp-route-id="@comment.AppUserId">
-                            @comment.AppUser?.Name ?? "Unknown"
+                            @comment.AppUser?.Name
                         </a>
                     }
                     else

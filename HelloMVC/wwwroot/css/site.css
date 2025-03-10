@@ -1,47 +1,55 @@
+/* Base font sizing and document layout */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #97876f;
+    color: var(--text-color);
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Focus styles for interactive elements */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* Form-floating placeholder alignment */
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--secondary-color);
+    text-align: end;
 }
 
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* CSS Variables: Color Palette, Sizing & Shadows */
 :root {
-    /* Color Palette */
-    --primary-color: #7e2a00; /* Text and buttons */
+    --primary-color: #7e2a00; /* Rich, deep orange-brown */
     --secondary-color: #6c757d; /* Gray for secondary text */
-    --accent-color: #f39c12; /* Accent (for hover, links, etc.) */
-    --background-color:#a3a#3a3; /* Light background */
+    --accent-color: #f39c12; /* Vibrant accent orange */
+    --background-color: #f8f9fa; /* Light background, similar to Bootstrap default */
     --text-color: #333333; /* Standard text color */
-    /* Sizing & Border */
-    --border-radius: 0.5rem; /* Rounded corners for buttons/cards */
-    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Standard box shadow */
+    --border-radius: 0.5rem; /* Rounded corners */
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+/* Buttons */
 .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
@@ -49,6 +57,12 @@ body {
     box-shadow: var(--box-shadow);
     transition: background-color 0.2s, border-color 0.2s;
 }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #8a2e00; /* Slightly darker variant */
+        border-color: #8a2e00;
+    }
 
 .btn-link {
     color: var(--primary-color);
@@ -59,44 +73,44 @@ body {
         color: var(--accent-color);
     }
 
+/* Navbar styling */
 .navbar {
-    background-color: #333333;
-    border-bottom: 1px solid var(--accent-color);
-
-}
-.nav-link {
-    color: var(--primary-color);
-    transition: color 0.2s;
+    background-color: #ffffff; /* White background */
 }
 
-/*.navbar-brand,
+.navbar-brand,
 .nav-link {
-    color: #ffffff !important;
+    color: var(--primary-color) !important; /* Use a dark primary color */
 }
 
     .nav-link:hover {
-        color: var(--accent-color) !important;
-    }*/
+        color: var(--accent-color) !important; /* Accent color on hover */
+    }
 
-/* Cards (used for sidebar and content boxes) */
+/* Card styling for content and sidebar */
 .card {
     border: none;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
+    transition: transform 0.2s;
 }
 
-/* Forms: Add rounded corners to form controls */
+    .card:hover {
+        transform: scale(1.02);
+    }
+
+/* Form controls and inputs */
 .form-control,
 .form-check-input {
     border-radius: var(--border-radius);
 }
 
-/* Buttons inside forms or other controls */
+/* General button rounding */
 .btn {
     border-radius: var(--border-radius);
 }
 
-/* Update links on hover for a subtle effect */
+/* Hyperlinks */
 a {
     color: var(--primary-color);
     transition: color 0.2s;
@@ -106,6 +120,7 @@ a {
         color: var(--accent-color);
     }
 
+/* Sidebar styles */
 .sidebar {
     background-color: var(--background-color);
     border: 1px solid #ddd;
@@ -118,5 +133,20 @@ a {
         margin-bottom: 1rem;
     }
 
+/* Container spacing */
+.container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
 
+/* Footer styling */
+footer {
+    background-color: #f8f9fa;
+    color: #ffffff;
+    padding: 1rem 0;
+    text-align: center;
+}
 
+    footer a {
+        color: var(--accent-color);
+    }
